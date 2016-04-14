@@ -34,7 +34,10 @@ update action model =
           ( players, Effects.none )
 
         Err error ->
-          ( model.players, Effects.none )
+          let
+              _ = Debug.log "fetching players error" error
+          in
+              ( model.players, Effects.none )
 
     HopAction _ ->
       ( model.players, Effects.none )

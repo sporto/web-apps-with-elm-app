@@ -7,7 +7,7 @@ import Navigation
 
 
 changeLevelCommands : PlayerId -> Int -> List Player -> List (Cmd Msg)
-changeLevelCommands playerId howMuch =
+changeLevelCommands playerId howMuch players =
     let
         cmdForPlayer existingPlayer =
             if existingPlayer.id == playerId then
@@ -15,11 +15,11 @@ changeLevelCommands playerId howMuch =
             else
                 Cmd.none
     in
-        List.map cmdForPlayer
+        List.map cmdForPlayer players
 
 
 updatePlayer : Player -> List Player -> List Player
-updatePlayer updatedPlayer =
+updatePlayer updatedPlayer players =
     let
         select existingPlayer =
             if existingPlayer.id == updatedPlayer.id then
@@ -27,7 +27,7 @@ updatePlayer updatedPlayer =
             else
                 existingPlayer
     in
-        List.map select
+        List.map select players
 
 
 update : Msg -> List Player -> ( List Player, Cmd Msg )

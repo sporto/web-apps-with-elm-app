@@ -78,15 +78,3 @@ changeLevelCommands playerId howMuch players =
                 Cmd.none
     in
         List.map cmdForPlayer players
-
-
-updatePlayer : Player -> List Player -> List Player
-updatePlayer updatedPlayer players =
-    let
-        select existingPlayer =
-            if existingPlayer.id == updatedPlayer.id then
-                updatedPlayer
-            else
-                existingPlayer
-    in
-        List.map select players

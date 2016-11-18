@@ -1,7 +1,7 @@
 module Players.Update exposing (..)
 
 import Navigation
-import Players.Commands exposing (save, changeLevelCommands, updatePlayer)
+import Players.Commands exposing (save, changeLevelCommands)
 import Players.Messages exposing (Msg(..))
 import Players.Models exposing (Player, PlayerId)
 
@@ -29,3 +29,15 @@ update message players =
 
         Save (Err error) ->
             ( players, Cmd.none )
+
+
+updatePlayer : Player -> List Player -> List Player
+updatePlayer updatedPlayer players =
+    let
+        select existingPlayer =
+            if existingPlayer.id == updatedPlayer.id then
+                updatedPlayer
+            else
+                existingPlayer
+    in
+        List.map select players

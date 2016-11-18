@@ -1,21 +1,34 @@
 module Players.Update exposing (..)
 
+import Navigation
+import Players.Commands exposing (save, changeLevelCommands)
 import Players.Messages exposing (Msg(..))
 import Players.Models exposing (Player, PlayerId)
-import Players.Commands exposing (save)
-import Navigation
 
 
-changeLevelCommands : PlayerId -> Int -> List Player -> List (Cmd Msg)
-changeLevelCommands playerId howMuch players =
-    let
-        cmdForPlayer existingPlayer =
-            if existingPlayer.id == playerId then
-                save { existingPlayer | level = existingPlayer.level + howMuch }
-            else
-                Cmd.none
-    in
-        List.map cmdForPlayer players
+update : Msg -> List Player -> ( List Player, Cmd Msg )
+update message players =
+    case message of
+        FetchAll (Ok newPlayers) ->
+            ( newPlayers, Cmd.none )
+
+        FetchAll (Err error) ->
+            ( players, Cmd.none )
+
+        ShowPlayers ->
+            ( players, Navigation.newUrl "#players" )
+
+        ShowPlayer id ->
+            ( players, Navigation.newUrl <| (++) "#players/" <| toString id )
+
+        ChangeLevel id howMuch ->
+            ( players, changeLevelCommands id howMuch players |> Cmd.batch )
+
+        Save (Ok updatedPlayer) ->
+            ( updatePlayer updatedPlayer players, Cmd.none )
+
+        Save (Err error) ->
+            ( players, Cmd.none )
 
 
 updatePlayer : Player -> List Player -> List Player
@@ -28,28 +41,3 @@ updatePlayer updatedPlayer players =
                 existingPlayer
     in
         List.map select players
-
-
-update : Msg -> List Player -> ( List Player, Cmd Msg )
-update message players =
-    case message of
-        FetchAllDone newPlayers ->
-            ( newPlayers, Cmd.none )
-
-        FetchAllFail error ->
-            ( players, Cmd.none )
-
-        ShowPlayers ->
-            ( players, Navigation.newUrl "#players" )
-
-        ShowPlayer id ->
-            ( players, Navigation.newUrl ("#players/" ++ (toString id)) )
-
-        ChangeLevel id howMuch ->
-            ( players, changeLevelCommands id howMuch players |> Cmd.batch )
-
-        SaveSuccess updatedPlayer ->
-            ( updatePlayer updatedPlayer players, Cmd.none )
-
-        SaveFail error ->
-            ( players, Cmd.none )

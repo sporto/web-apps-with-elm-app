@@ -7,7 +7,7 @@ import Players.Models exposing (..)
 import Players.Messages exposing (..)
 
 
-view : Player -> Html.Html Msg
+view : Player -> Html Msg
 view model =
     div []
         [ nav model
@@ -15,13 +15,13 @@ view model =
         ]
 
 
-nav : Player -> Html.Html Msg
+nav : Player -> Html Msg
 nav model =
     div [ class "clearfix mb2 white bg-black p1" ]
         [ listBtn ]
 
 
-form : Player -> Html.Html Msg
+form : Player -> Html Msg
 form player =
     div [ class "m3" ]
         [ h1 [] [ text player.name ]
@@ -29,7 +29,7 @@ form player =
         ]
 
 
-formLevel : Player -> Html.Html Msg
+formLevel : Player -> Html Msg
 formLevel player =
     div
         [ class "clearfix py1"
@@ -43,13 +43,13 @@ formLevel player =
         ]
 
 
-btnLevelDecrease : Player -> Html.Html Msg
+btnLevelDecrease : Player -> Html Msg
 btnLevelDecrease player =
     a [ class "btn ml1 h1", onClick (ChangeLevel player.id -1) ]
         [ i [ class "fa fa-minus-circle" ] [] ]
 
 
-btnLevelIncrease : Player -> Html.Html Msg
+btnLevelIncrease : Player -> Html Msg
 btnLevelIncrease player =
     a [ class "btn ml1 h1", onClick (ChangeLevel player.id 1) ]
         [ i [ class "fa fa-plus-circle" ] [] ]

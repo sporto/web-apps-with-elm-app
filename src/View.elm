@@ -1,7 +1,6 @@
 module View exposing (..)
 
 import Html exposing (Html, div, text)
-import Html.App
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Players.List
@@ -20,7 +19,7 @@ page : Model -> Html Msg
 page model =
     case model.route of
         PlayersRoute ->
-            Html.App.map PlayersMsg (Players.List.view model.players)
+            Html.map PlayersMsg (Players.List.view model.players)
 
         PlayerRoute id ->
             playerEditPage model id
@@ -39,7 +38,7 @@ playerEditPage model playerId =
     in
         case maybePlayer of
             Just player ->
-                Html.App.map PlayersMsg (Players.Edit.view player)
+                Html.map PlayersMsg (Players.Edit.view player)
 
             Nothing ->
                 notFoundView

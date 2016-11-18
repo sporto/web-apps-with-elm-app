@@ -9,11 +9,11 @@ import Players.Commands exposing (fetchAll)
 import Routing exposing (Route)
 
 
-init : Result String Route -> ( Model, Cmd Msg )
-init result =
+init : Navigation.Location -> ( Model, Cmd Msg )
+init location =
     let
         currentRoute =
-            Routing.routeFromResult result
+            Routing.hashParser location
     in
         ( initialModel currentRoute, Cmd.map PlayersMsg fetchAll )
 
@@ -23,21 +23,15 @@ subscriptions model =
     Sub.none
 
 
-urlUpdate : Result String Route -> Model -> ( Model, Cmd Msg )
-urlUpdate result model =
-    let
-        currentRoute =
-            Routing.routeFromResult result
-    in
-        ( { model | route = currentRoute }, Cmd.none )
+
+-- MAIN
 
 
-main : Program Never
+main : Program Never Model Msg
 main =
-    Navigation.program Routing.parser
+    Navigation.program UrlChange
         { init = init
         , view = view
         , update = update
-        , urlUpdate = urlUpdate
         , subscriptions = subscriptions
         }

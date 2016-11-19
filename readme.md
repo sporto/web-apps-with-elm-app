@@ -2,20 +2,20 @@
 
 An example Elm single page application built for http://www.elm-tutorial.org/
 
+## This application demonstrates
+
+- The Elm architecture
+- Routing
+- Ajax requests and Json parsing
+- External CSS
+
 ## This application uses
 
-- [Html.App](http://package.elm-lang.org/packages/elm-lang/html) for structure
+- [Html](http://package.elm-lang.org/packages/elm-lang/html) for structure
 - [Navigation](http://package.elm-lang.org/packages/elm-lang/navigation) for routing
 - [Webpack](https://webpack.github.io/) for building
 - [Basscss](http://www.basscss.com/) for css styles
 - [JsonServer](https://github.com/typicode/json-server) for fake api
-
-## This application demonstrates
-
-- Elm architecture
-- Routing
-- Ajax requests and Json parsing
-- External CSS
 
 ## Setup
 
@@ -30,15 +30,13 @@ npm install -g foreman
 
 Foreman is a package that allows running several servers with one command.
 
-Install the necessary local node packages:
+Install the local node packages:
 
 ```
 npm install
 ```
 
 ## Running the application:
-
-In terminal run:
 
 ```
 nf start

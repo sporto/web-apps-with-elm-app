@@ -33,23 +33,23 @@ updatePlayer updatedPlayer players =
 update : Msg -> List Player -> ( List Player, Cmd Msg )
 update message players =
     case message of
-        FetchAllDone newPlayers ->
+        OnFetchAll (Ok newPlayers) ->
             ( newPlayers, Cmd.none )
 
-        FetchAllFail error ->
+        OnFetchAll (Err error) ->
             ( players, Cmd.none )
 
         ShowPlayers ->
             ( players, Navigation.newUrl "#players" )
 
         ShowPlayer id ->
-            ( players, Navigation.newUrl ("#players/" ++ (toString id)) )
+            ( players, Navigation.newUrl ("#players/" ++ id) )
 
         ChangeLevel id howMuch ->
             ( players, changeLevelCommands id howMuch players |> Cmd.batch )
 
-        SaveSuccess updatedPlayer ->
+        OnSave (Ok updatedPlayer) ->
             ( updatePlayer updatedPlayer players, Cmd.none )
 
-        SaveFail error ->
+        OnSave (Err error) ->
             ( players, Cmd.none )

@@ -22,7 +22,15 @@ An example Elm single page application built for http://www.elm-tutorial.org/
 - [Install Elm](http://elm-lang.org/install)
 - [Install Node](https://nodejs.org/en/download/)
 
-Install the necessary node packages:
+Install global packages
+
+```
+npm install -g foreman
+```
+
+Foreman is a package that allows running several servers with one command.
+
+Install the necessary local node packages:
 
 ```
 npm install
@@ -30,21 +38,15 @@ npm install
 
 ## Running the application:
 
-In one terminal run the webpack dev server:
+In terminal run:
 
 ```
-npm run dev
+nf start
 ```
 
-In another terminal run the fake api server:
+Open `http://localhost:3000`
 
-```
-npm run api
-```
-
-Open http://localhost:3000
-
-## TODO
+## Possible improvements
 
 - Add player
 - Delete players
@@ -57,6 +59,4 @@ Open http://localhost:3000
 - Search box for perks
 - Tests
 - When deleting a player delete associated perksPlayers
-
-
 

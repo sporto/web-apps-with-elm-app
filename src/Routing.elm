@@ -15,7 +15,7 @@ matchers : Parser (Route -> a) a
 matchers =
     oneOf
         [ map PlayersRoute top
-        , map PlayerRoute (s "players" </> string)
+        , map PlayerRoute (s "players" </> int)
         , map PlayersRoute (s "players")
         ]
 

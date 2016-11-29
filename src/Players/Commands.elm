@@ -21,7 +21,7 @@ fetchAllUrl =
 
 saveUrl : PlayerId -> String
 saveUrl playerId =
-    "http://localhost:4000/players/" ++ playerId
+    "http://localhost:4000/players/" ++ (toString playerId)
 
 
 saveRequest : Player -> Http.Request Player
@@ -54,17 +54,21 @@ collectionDecoder =
 
 memberDecoder : Decode.Decoder Player
 memberDecoder =
-    Decode.map3 Player
-        (field "id" Decode.string)
-        (field "name" Decode.string)
-        (field "level" Decode.int)
+    let
+        stringToIntDecoder =
+            Decode.map (\s -> Result.withDefault 0 (String.toInt s)) Decode.string
+    in
+        Decode.map3 Player
+            (field "id" stringToIntDecoder)
+            (field "name" Decode.string)
+            (field "level" Decode.int)
 
 
 memberEncoded : Player -> Encode.Value
 memberEncoded player =
     let
         list =
-            [ ( "id", Encode.string player.id )
+            [ ( "id", Encode.int player.id )
             , ( "name", Encode.string player.name )
             , ( "level", Encode.int player.level )
             ]

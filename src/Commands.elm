@@ -39,6 +39,25 @@ savePlayerRequest player =
         }
 
 
+addPlayerRequest : Player -> Http.Request Player
+addPlayerRequest player =
+    Http.request
+        { body = playerEncoder player |> Http.jsonBody
+        , expect = Http.expectJson playerDecoder
+        , headers = []
+        , method = "POST"
+        , timeout = Nothing
+        , url = fetchPlayersUrl
+        , withCredentials = False
+        }
+
+
+
+addPlayerCmd : Player -> Cmd Msg
+addPlayerCmd player =
+    addPlayerRequest player
+        |> Http.send Msgs.OnPlayerAdd
+            
 savePlayerCmd : Player -> Cmd Msg
 savePlayerCmd player =
     savePlayerRequest player

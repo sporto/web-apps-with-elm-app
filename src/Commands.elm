@@ -38,6 +38,7 @@ savePlayerRequest player =
         , withCredentials = False
         }
 
+
 addPlayerRequest : Player -> Http.Request Player
 addPlayerRequest player =
     Http.request
@@ -46,16 +47,17 @@ addPlayerRequest player =
         , headers = []
         , method = "POST"
         , timeout = Nothing
-        , url =fetchPlayers
+        , url = fetchPlayersUrl
         , withCredentials = False
-)
+        }
 
 
-savePlayerCmd : Player -> Cmd Msg
-savePlayerCmd player =
-    savePlayerRequest player
-|> Http.send Msgs.OnPlayerSave
 
+addPlayerCmd : Player -> Cmd Msg
+addPlayerCmd player =
+    addPlayerRequest player
+        |> Http.send Msgs.OnPlayerAdd
+            
 savePlayerCmd : Player -> Cmd Msg
 savePlayerCmd player =
     savePlayerRequest player

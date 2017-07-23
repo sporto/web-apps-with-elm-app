@@ -1,8 +1,8 @@
 module Players.Edit exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (class, value, href)
-import Html.Events exposing (onClick)
+import Html.Attributes exposing (..)
+import Html.Events exposing (onClick, onInput)
 import Models exposing (Player)
 import Msgs exposing (Msg)
 import Routing exposing (playersPath)
@@ -17,8 +17,7 @@ view model =
 newview : Player -> Html.Html Msg
 newview model =
     div []
-        [  formnew model
-]
+        [formnew model]
 
 nav : Player -> Html.Html Msg
 nav model =
@@ -39,8 +38,8 @@ formnew player =
             input [ placeholder "Add Name", onInput Msgs.UpdateName] [],
             a [ class "btn regular" , href playersPath , onClick Msgs.AddNew]
               [  text "Save" ],
-            a [ class "btn regular" , href playersPath ]
-[ text "Cancel" ] 
+            a [ class "btn regular" , href playersPath ] [ text "Cancel" ] 
+        ]
 
 formLevel : Player -> Html.Html Msg
 formLevel player =

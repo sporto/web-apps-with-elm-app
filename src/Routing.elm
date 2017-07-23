@@ -36,4 +36,4 @@ playerPath id =
 
 newplayerPath :  String
 newplayerPath =
-"#newplayer"
+  "#newplayer"

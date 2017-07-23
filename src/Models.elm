@@ -13,6 +13,8 @@ initialModel : Route -> Model
 initialModel route =
     { players = RemoteData.Loading
     , route = route
+    , newName : String
+    , filter : String
     }
 
 
@@ -27,7 +29,16 @@ type alias Player =
     }
 
 
+initialPlayer : Player
+initialPlayer  =
+ {
+    id = "0"
+    , name = ""
+    , level = 0
+}
+
 type Route
     = PlayersRoute
     | PlayerRoute PlayerId
     | NotFoundRoute
+    | AddPlayerRoute

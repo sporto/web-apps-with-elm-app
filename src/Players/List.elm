@@ -32,7 +32,9 @@ maybeList response =
             text "Loading..."
 
         RemoteData.Success players ->
-            list players
+            players |>
+            filterPlayers fltr |>
+            list  
 
         RemoteData.Failure error ->
             text (toString error)
@@ -41,7 +43,9 @@ maybeList response =
 list : List Player -> Html Msg
 list players =
     div [ class "p2" ]
-        [ table []
+        [ 
+            filterPlayerPage,
+            table []
             [ thead []
                 [ tr []
                     [ th [] [ text "Id" ]
@@ -77,3 +81,18 @@ editBtn player =
             , href path
             ]
             [ i [ class "fa fa-pencil mr1" ] [], text "Edit" ]
+
+filterPlayerPage :  Html Msg
+filterPlayerPage   =
+  div 
+  []
+  [
+      label[][text "Filter:"],
+      input
+      [
+         placeholder "Search by Name"
+         , onInput Msgs.Setfilter       
+      ]
+      [] ,
+      addBtn 
+]

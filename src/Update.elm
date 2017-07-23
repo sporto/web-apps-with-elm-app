@@ -1,7 +1,7 @@
 module Update exposing (..)
 
-import Commands exposing (savePlayerCmd)
-import Models exposing (Model, Player)
+import Commands exposing (savePlayerCmd, addPlayerCmd)
+import Models exposing (Model, Player, initialPlayer)
 import Msgs exposing (Msg)
 import Routing exposing (parseLocation)
 import RemoteData
@@ -32,7 +32,20 @@ update msg model =
 
         Msgs.OnPlayerSave (Err error) ->
             ( model, Cmd.none )
-
+        Msgs.Setfilter fltr ->
+            ( { model | filter = fltr }, Cmd.none )
+        Msgs.UpdateName name ->
+          ({model | newName = name}, Cmd.none)
+        Msgs.AddNew  ->
+         let
+            newPlayer =
+              { initialPlayer | name = model.newName, id =  (nextid model.players) }
+         in
+              ( model, addPlayerCmd newPlayer )
+        Msgs.OnPlayerAdd  (Ok player) ->
+             ((addPlayerToModel model player), Cmd.none )
+        Msgs.OnPlayerAdd (Err error) ->
+            ( {model | filter = (toString error)}, Cmd.none )
 
 updatePlayer : Model -> Player -> Model
 updatePlayer model updatedPlayer =
@@ -50,3 +63,29 @@ updatePlayer model updatedPlayer =
             RemoteData.map updatePlayerList model.players
     in
         { model | players = updatedPlayers }
+
+addPlayerToModel : Model  -> Player -> Model
+addPlayerToModel model newplayer= 
+  case model.players of
+    RemoteData.Success  playerlist ->
+      {model | players = (RemoteData.succeed (newplayer::playerlist)) }
+    _  ->
+      model
+
+greatestid : Player -> Int -> Int
+greatestid  curplayer gid =
+   let
+     playerid = Result.withDefault 0 (String.toInt curplayer.id)
+   in
+     if (playerid > gid) then
+       playerid
+     else
+       gid
+
+nextid :  RemoteData.RemoteData e (List Player) -> String
+nextid rd =
+  case rd of
+    RemoteData.Success  playerlist ->
+      1 + (playerlist |> List.foldr greatestid 0 ) |> toString 
+    _  ->
+       "0"

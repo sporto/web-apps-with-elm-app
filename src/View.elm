@@ -20,12 +20,12 @@ page model =
     case model.route of
         Models.PlayersRoute ->
             Players.List.view model.players
-
         Models.PlayerRoute id ->
             playerEditPage model id
-
         Models.NotFoundRoute ->
             notFoundView
+        Models.AddPlayerRoute ->
+           Players.Edit.newview Models.initialPlayer
 
 
 playerEditPage : Model -> PlayerId -> Html Msg

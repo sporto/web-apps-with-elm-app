@@ -6,7 +6,7 @@
   "dependencies": {
     "ace-css": "1.1",
     "css-loader": "^1.0.0",
-    "elm-webpack-loader": "^4.5.0",
+    "elm-webpack-loader": "^5.0.0",
     "file-loader": "^2.0.0",
     "font-awesome": "4",
     "foreman": "^3.0.1",
